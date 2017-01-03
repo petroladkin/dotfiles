@@ -6,9 +6,13 @@ call plug#begin('~/.vim/plugged')
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'majutsushi/tagbar'
+Plug 'rking/ag.vim'
 
 "------------------=== Colors ===---------------------
 Plug 'tomasr/molokai'
+
+"-------------------=== Git ===-----------------------
+Plug 'tpope/vim-fugitive'
 
 "------------------=== Other ===----------------------
 Plug 'vim-airline/vim-airline'
