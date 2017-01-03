@@ -14,6 +14,10 @@ Plug 'tomasr/molokai'
 "-------------------=== Git ===-----------------------
 Plug 'tpope/vim-fugitive'
 
+"------------------=== Python ===---------------------
+Plug 'python-mode/python-mode'
+
+
 "------------------=== Other ===----------------------
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -97,8 +101,16 @@ set clipboard=unnamedplus
 set smarttab
 set tabstop=2
 
+let mapleader = ','
+
 " NERDTree
-map <C-n> :NERDTreeToggle<CR>
+map <leader>n :NERDTreeToggle<CR>
+
+" Tagbar
+map <leader>t :TagbarToggle<CR>
+let g:tagbar_autofocus = 1
+let g:tagbar_sort = 0
+let g:tagbar_foldlevel = 0
 
 " CtrlP
 let g:ctrlp_map = '<c-p>'
