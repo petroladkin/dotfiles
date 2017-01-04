@@ -95,3 +95,6 @@ export PIP_DOWNLOAD_CACHE=$HOME/.pip/cache
 gpip(){
    PIP_REQUIRE_VIRTUALENV="" pip "$@"
 }
+
+export WORKON_HOME=$HOME/.virtualenvs
+source /usr/local/bin/virtualenvwrapper.sh

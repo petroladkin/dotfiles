@@ -16,7 +16,7 @@ Plug 'tpope/vim-fugitive'
 
 "------------------=== Python ===---------------------
 Plug 'python-mode/python-mode'
-
+Plug 'jmcantrell/vim-virtualenv'
 
 "------------------=== Other ===----------------------
 Plug 'vim-airline/vim-airline'
