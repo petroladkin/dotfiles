@@ -98,3 +98,5 @@ gpip(){
 
 export WORKON_HOME=$HOME/.virtualenvs
 source /usr/local/bin/virtualenvwrapper.sh
+
+source ~/.custom.zshrc

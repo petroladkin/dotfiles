@@ -21,7 +21,7 @@ Plug 'jmcantrell/vim-virtualenv'
 "------------------=== Other ===----------------------
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'edkolev/tmuxline.vim'
+"Plug 'edkolev/tmuxline.vim'
 
 call plug#end()
 
@@ -90,7 +90,7 @@ nnoremap <C-H> <C-W><C-H>
 "set guioptions-=r   " remove right-hand scroll bar
 
 " Vim-Airline
-let g:airline_theme='powerlineish'
+let g:airline_theme='solarized'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
 
