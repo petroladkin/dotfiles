@@ -25,7 +25,7 @@ Plug 'solarnz/thrift.vim'
 "------------------=== Other ===----------------------
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-"Plug 'edkolev/tmuxline.vim'
+Plug 'edkolev/tmuxline.vim'
 
 call plug#end()
 
@@ -100,7 +100,7 @@ imap df <Esc>l
 "endif
 
 " Vim-Airline
-let g:airline_theme='solarized'
+let g:airline_theme='luna'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
 
