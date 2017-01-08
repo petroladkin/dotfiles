@@ -12,3 +12,4 @@ ln -s "$rpwd/vim"       ~/.vim
 ln -s "$rpwd/tmux.conf" ~/.tmux.conf
 ln -s "$rpwd/zshrc"     ~/.zshrc
 
+touch ~/.custom.zshrc
