@@ -13,11 +13,16 @@ Plug 'tomasr/molokai'
 
 "-------------------=== Git ===-----------------------
 Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
 
 "------------------=== Python ===---------------------
 Plug 'python-mode/python-mode'
 Plug 'jmcantrell/vim-virtualenv'
 Plug 'vim-scripts/Pydiction'
+
+"------------------=== Elixir ===---------------------
+Plug 'elixir-editors/vim-elixir'
+" Plug 'slashmili/alchemist.vim'
 
 "------------------=== Thrift ===---------------------
 Plug 'solarnz/thrift.vim'
@@ -26,6 +31,7 @@ Plug 'solarnz/thrift.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'edkolev/tmuxline.vim'
+Plug 'fisadev/FixedTaskList.vim'
 
 call plug#end()
 
@@ -95,9 +101,7 @@ nnoremap <Leader><Left> :bp<CR>
 imap df <Esc>l
 
 " Use system clipboard
-"if has('unnamedplus')
-"  set clipboard=unnamed,unnamedplus
-"endif
+set clipboard=unnamed
 
 " Vim-Airline
 let g:airline_theme='luna'
@@ -117,6 +121,9 @@ let g:tagbar_foldlevel = 0
 " CtrlP
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlPMixed'
+
+" TaskList
+nnoremap <Leader>l :TaskList<CR>
 
 " python-mode
 let g:pymode_options = 0

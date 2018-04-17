@@ -54,8 +54,11 @@ plugins=(git git-extras git-flow docker docker-compose sublime osx)
 
 # User configuration
 
-export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:."
 # export MANPATH="/usr/local/man:$MANPATH"
+
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
 
 source $ZSH/oh-my-zsh.sh
 
@@ -64,9 +67,9 @@ source $ZSH/oh-my-zsh.sh
 
 # Preferred editor for local and remote sessions
 # if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
+#     export EDITOR='vim'
 # else
-#   export EDITOR='mvim'
+#     export EDITOR='mvim'
 # fi
 
 # Compilation flags
@@ -96,7 +99,15 @@ gpip(){
    PIP_REQUIRE_VIRTUALENV="" pip "$@"
 }
 
+gpip3(){
+   PIP_REQUIRE_VIRTUALENV="" pip3 "$@"
+}
+
 export WORKON_HOME=$HOME/.virtualenvs
+export PROJECT_HOME=$HOME/Projects
+export VIRTUALENVWRAPPER_VIRTUALENV_ARGS='--no-site-packages'
 source /usr/local/bin/virtualenvwrapper.sh
 
 source ~/.custom.zshrc
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
