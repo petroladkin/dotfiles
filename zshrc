@@ -50,7 +50,7 @@ ZSH_THEME="agnoster"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git git-extras git-flow docker docker-compose sublime osx)
+plugins=(git git-extras git-flow docker docker-compose sublime osx aterminal encode64 mix pip pod pyenv pylint python tig tmux tugboat urltools virtualenvwrapper)
 
 # User configuration
 
@@ -107,6 +107,37 @@ export WORKON_HOME=$HOME/.virtualenvs
 export PROJECT_HOME=$HOME/Projects
 export VIRTUALENVWRAPPER_VIRTUALENV_ARGS='--no-site-packages'
 source /usr/local/bin/virtualenvwrapper.sh
+
+_tmuxinator() {
+  local commands projects
+  commands=(${(f)"$(tmuxinator commands zsh)"})
+  projects=(${(f)"$(tmuxinator completions start)"})
+
+  if (( CURRENT == 2 )); then
+    _alternative \
+      'commands:: _describe -t commands "tmuxinator subcommands" commands' \
+      'projects:: _describe -t projects "tmuxinator projects" projects'
+  elif (( CURRENT == 3)); then
+    case $words[2] in
+      copy|debug|delete|open|start)
+        _arguments '*:projects:($projects)'
+      ;;
+    esac
+  fi
+
+  return
+}
+
+compdef _tmuxinator tmuxinator mux
+alias mux="tmuxinator"
+
+# Local Variables:
+# mode: Shell-Script
+# sh-indentation: 2
+# indent-tabs-mode: nil
+# sh-basic-offset: 2
+# End:
+# vim: ft=zsh sw=2 ts=2 et
 
 source ~/.custom.zshrc
 
