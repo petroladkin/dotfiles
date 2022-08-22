@@ -15,18 +15,6 @@ Plug 'tomasr/molokai'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 
-"------------------=== Python ===---------------------
-Plug 'python-mode/python-mode'
-Plug 'jmcantrell/vim-virtualenv'
-Plug 'vim-scripts/Pydiction'
-
-"------------------=== Elixir ===---------------------
-Plug 'elixir-editors/vim-elixir'
-" Plug 'slashmili/alchemist.vim'
-
-"------------------=== Thrift ===---------------------
-Plug 'solarnz/thrift.vim'
-
 "------------------=== Other ===----------------------
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
