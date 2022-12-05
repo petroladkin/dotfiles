@@ -29,22 +29,15 @@ fi
 
 SUDO=""
 if command -v sudo &> /dev/null; then
-  echo "'sudo' exist"
   SUDO="sudo"
 fi
 
 if [ $IS_FEDORA_LINUX -eq 1 ]; then
   echo ""
-  echo "It's FEDORA"
-
-  echo ""
-  $SUDO dnf update && $SUDO dnf install git -y
+  $SUDO dnf install git -y
 fi
 
 if [ $IS_UBUNTU_LINUX -eq 1 ]; then
-  echo ""
-  echo "It's UBUNTU"
-
   echo ""
   $SUDO apt-get update && $SUDO apt-get install -y git
 fi
