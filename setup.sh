@@ -1,6 +1,5 @@
 #!/bin/bash
 
-#TODO: check exist .custom.zshrc and show question to recreate the file
 
 . ./common/bash_colors.sh
 . ./common/common.sh
