@@ -1,0 +1,7 @@
+
+set show-changes = no
+set line-graphics = default
+set commit-order = auto
+set vertical-split = vertical
+
+set main-view-commit-title-graph = v2
