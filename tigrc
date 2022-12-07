@@ -3,5 +3,7 @@ set show-changes = no
 set line-graphics = default
 set commit-order = auto
 set vertical-split = vertical
+set show-changes = yes
 
+set main-options = --exclude=refs/stash --all
 set main-view-commit-title-graph = v2
