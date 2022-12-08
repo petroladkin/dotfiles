@@ -81,8 +81,8 @@ if [ "$IS_LINUX" -eq 1 ]; then
 fi
 
 
-info "install 'vim tmux tig zsh curl git'"
-install vim tmux tig zsh curl git
+info "install 'vim tmux tig zsh curl git util-linux-user'"
+install vim tmux tig zsh curl git util-linux-user
 
 
 info "install 'ohmyzsh'"
@@ -96,4 +96,5 @@ exec zsh
 
 p10k configure
 
-chsh -s /usr/bin/zsh
+info 'setup zsh as default shell'
+chsh -s $(which zsh)
