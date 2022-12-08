@@ -95,3 +95,5 @@ git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "${ZSH_CUSTOM:-
 exec zsh
 
 p10k configure
+
+chsh -s /usr/bin/zsh
