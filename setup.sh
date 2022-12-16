@@ -81,20 +81,31 @@ if [ "$IS_LINUX" -eq 1 ]; then
 fi
 
 
-info "install 'vim tmux tig zsh curl git util-linux-user'"
-install vim tmux tig zsh curl git util-linux-user
+info "install 'vim tmux tig zsh curl git'"
+install vim tmux tig zsh curl git
+
+if [ $IS_FEDORA_LINUX -eq 1 ]; then
+  info "install 'util-linux-user'"
+  install util-linux-user
+fi
+
+
+info 'setup zsh as default shell'
+chsh -s $(which zsh)
 
 
 info "install 'ohmyzsh'"
-sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended --keep-zshrc
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended --keep-zshrc
 
 info "install 'p10k'"
 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k"
 
 
-exec zsh
-
-p10k configure
-
-info 'setup zsh as default shell'
-chsh -s $(which zsh)
+info "FINISH, need to reboot system"
+if question_Yn "Do reboot system now?"; then
+  info "rebooting..."
+  $SUDO reboot now
+else
+  info "run zsh"
+  exec zsh
+fi
