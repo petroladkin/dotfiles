@@ -68,6 +68,12 @@ fi
 touch "$HOME/.custom.zshrc"
 
 
+if [ "$IS_OSX" -eq 1 ]; then
+  info "TODO: add install tools in OSX"
+  exit 0
+fi
+
+
 update_repos
 
 if ! command -v fc-cache &> /dev/null; then
