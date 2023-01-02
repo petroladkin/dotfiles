@@ -3,7 +3,6 @@
 IS_OSX=1
 IS_FEDORA_LINUX=0
 IS_UBUNTU_LINUX=0
-#TODO: add check OSX
 if [[ -f "/etc/os-release" ]]; then
   # Linux
   if grep "^NAME=" /etc/os-release | grep -q "Fedora"; then

@@ -66,21 +66,23 @@ IS_OSX=1
 IS_LINUX=0
 IS_FEDORA_LINUX=0
 IS_UBUNTU_LINUX=0
-#TODO: add check OSX
-if grep "^NAME=" /etc/os-release | grep -q "Fedora"; then
-  # Fedora
-  IS_OSX=0
-  IS_LINUX=1
-  IS_FEDORA_LINUX=1
-elif grep "^NAME=" /etc/os-release | grep -q "Ubuntu"; then
-  # Ubuntu
-  IS_OSX=0
-  IS_LINUX=1
-  IS_UBUNTU_LINUX=1
-else
-  grep "^NAME=" /etc/os-release
-  echo 'ERROR: unsupported OS'
-  exit -1
+if [[ -f "/etc/os-release" ]]; then
+  # Linux
+  if grep "^NAME=" /etc/os-release | grep -q "Fedora"; then
+    # Fedora
+    IS_OSX=0
+    IS_LINUX=1
+    IS_FEDORA_LINUX=1
+  elif grep "^NAME=" /etc/os-release | grep -q "Ubuntu"; then
+    # Ubuntu
+    IS_OSX=0
+    IS_LINUX=1
+    IS_UBUNTU_LINUX=1
+  else
+    grep "^NAME=" /etc/os-release
+    echo 'ERROR: unsupported OS'
+    exit -1
+  fi
 fi
 
 SUDO=""
