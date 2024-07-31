@@ -101,6 +101,8 @@
     todo                    # todo items (https://github.com/todotxt/todo.txt-cli)
     timewarrior             # timewarrior tracking status (https://timewarrior.net/)
     taskwarrior             # taskwarrior task count (https://taskwarrior.org/)
+    disk_usage
+    battery
     time                    # current time
     # =========================[ Line #2 ]=========================
     newline                 # \n
