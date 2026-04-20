@@ -10,7 +10,10 @@ fi
 
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
-export PATH="$PATH:/Users/petroladkin/DevTools/flutter/bin:/Users/petroladkin/DevTools/cmdline-tools/bin"
+
+# Add local tool paths only if directories exist
+[[ -d "$HOME/DevTools/flutter/bin" ]] && export PATH="$PATH:$HOME/DevTools/flutter/bin"
+[[ -d "$HOME/DevTools/cmdline-tools/bin" ]] && export PATH="$PATH:$HOME/DevTools/cmdline-tools/bin"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,

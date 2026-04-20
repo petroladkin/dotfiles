@@ -1,23 +1,25 @@
 #!/bin/bash
 
-IS_OSX=1
+IS_OSX=0
 IS_FEDORA_LINUX=0
-IS_UBUNTU_LINUX=0
+IS_APT_LINUX=0
+
 if [[ -f "/etc/os-release" ]]; then
-  # Linux
-  if grep "^NAME=" /etc/os-release | grep -q "Fedora"; then
-    # Fedora
-    IS_OSX=0
-    IS_FEDORA_LINUX=1
-  elif grep "^NAME=" /etc/os-release | grep -q "Ubuntu"; then
-    # Ubuntu
-    IS_OSX=0
-    IS_UBUNTU_LINUX=1
-  else
-    grep "^NAME=" /etc/os-release
-    echo 'ERROR: unsupported OS'
-    exit 1
-  fi
+  _os_id=$(grep "^ID=" /etc/os-release | cut -d= -f2 | tr -d '"')
+  case "$_os_id" in
+    fedora)
+      IS_FEDORA_LINUX=1
+      ;;
+    ubuntu|debian|pop)
+      IS_APT_LINUX=1
+      ;;
+    *)
+      echo "WARNING: unrecognized Linux distribution (ID=$_os_id), attempting apt-based setup"
+      IS_APT_LINUX=1
+      ;;
+  esac
+else
+  IS_OSX=1
 fi
 
 
@@ -26,24 +28,29 @@ if command -v sudo &> /dev/null; then
   SUDO="sudo"
 fi
 
+
 if [ $IS_FEDORA_LINUX -eq 1 ]; then
-  echo ""
   $SUDO dnf install git -y
 fi
 
-if [ $IS_UBUNTU_LINUX -eq 1 ]; then
-  echo ""
+if [ $IS_APT_LINUX -eq 1 ]; then
   $SUDO apt-get update && $SUDO apt-get install -y git
 fi
 
 if [ $IS_OSX -eq 1 ]; then
-  echo ""
+  if ! command -v brew &> /dev/null; then
+    echo "Installing Homebrew..."
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    if [[ -f "/opt/homebrew/bin/brew" ]]; then
+      eval "$(/opt/homebrew/bin/brew shellenv)"
+    fi
+  fi
   brew install git
 fi
 
 
 if [ -d "$HOME/.dotfiles" ]; then
-  echo "$HOME/.dotfiles directory exist"
+  echo "$HOME/.dotfiles directory already exists"
   exit 1
 fi
 
