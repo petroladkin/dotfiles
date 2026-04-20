@@ -133,3 +133,36 @@ install() {
     brew install "$@"
   fi
 }
+
+install_lazygit() {
+  if command -v lazygit &> /dev/null; then
+    info "lazygit already installed, skipping"
+    return 0
+  fi
+
+  if [ $IS_OSX -eq 1 ]; then
+    brew install lazygit
+  elif [ $IS_FEDORA_LINUX -eq 1 ]; then
+    $SUDO dnf install -y lazygit
+  elif [ $IS_APT_LINUX -eq 1 ]; then
+    # lazygit is not in default apt repos — install from GitHub releases
+    info "downloading lazygit from GitHub releases"
+    local _version
+    _version=$(curl -fsSL "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" \
+      | grep '"tag_name"' | sed 's/.*"v\([^"]*\)".*/\1/')
+    local _arch
+    case "$(uname -m)" in
+      x86_64)  _arch="x86_64" ;;
+      aarch64) _arch="arm64"  ;;
+      armv7l)  _arch="armv6"  ;;
+      *)       _arch="x86_64" ;;
+    esac
+    local _tmpdir
+    _tmpdir=$(mktemp -d)
+    curl -fsSL "https://github.com/jesseduffield/lazygit/releases/latest/download/lazygit_${_version}_Linux_${_arch}.tar.gz" \
+      -o "$_tmpdir/lazygit.tar.gz"
+    tar -xf "$_tmpdir/lazygit.tar.gz" -C "$_tmpdir" lazygit
+    $SUDO install "$_tmpdir/lazygit" /usr/local/bin/lazygit
+    rm -rf "$_tmpdir"
+  fi
+}

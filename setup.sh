@@ -76,6 +76,9 @@ if [ "$IS_OSX" -eq 1 ]; then
   info "install packages"
   brew install vim tmux tig git curl
 
+  info "install lazygit"
+  install_lazygit
+
   info "install fonts to ~/Library/Fonts/"
   mkdir -p "$HOME/Library/Fonts"
   cp "$rpwd/fonts/"*.ttf "$HOME/Library/Fonts/"
@@ -124,6 +127,9 @@ fc-cache -f
 
 info "install packages"
 install vim tmux tig zsh curl git
+
+info "install lazygit"
+install_lazygit
 
 if [ $IS_FEDORA_LINUX -eq 1 ]; then
   info "install 'util-linux-user' (required for chsh on Fedora)"
