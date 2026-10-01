@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# OS detection: keep in sync with common/common.sh (not available before clone)
 IS_OSX=0
 IS_FEDORA_LINUX=0
 IS_APT_LINUX=0
@@ -24,8 +25,12 @@ fi
 
 
 SUDO=""
-if command -v sudo &> /dev/null; then
+if [ "$(id -u)" -ne 0 ] && command -v sudo &> /dev/null; then
   SUDO="sudo"
+fi
+if [ $IS_OSX -eq 0 ] && [ "$(id -u)" -ne 0 ] && [ -z "$SUDO" ]; then
+  echo "ERROR: need root or sudo (Debian: su -c 'apt-get install sudo && usermod -aG sudo $USER', then re-login)" >&2
+  exit 1
 fi
 
 

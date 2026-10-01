@@ -5,8 +5,16 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
+# Homebrew on Apple Silicon: /opt/homebrew/bin is not in /etc/paths, so a
+# fresh install has no brew/tmux/nvim in PATH without this.
+[[ -x /opt/homebrew/bin/brew ]] && eval "$(/opt/homebrew/bin/brew shellenv)"
+
+# User-local binaries: claude, herdr, fresh, fd shim, fnm (Linux) live here.
+export PATH="$HOME/.local/bin:$PATH"
+[[ -d "$HOME/.local/share/fnm" ]] && export PATH="$HOME/.local/share/fnm:$PATH"
+
+# fnm: Node version manager (switches Node on `cd` into a dir with .node-version/.nvmrc)
+command -v fnm &> /dev/null && eval "$(fnm env --use-on-cd --shell zsh)"
 
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
@@ -81,7 +89,8 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(zsh-navigation-tools git git-extras gitignore sublime-merge docker docker-compose docker-machine tig tmux pyenv pylint python pip command-not-found)
+# docker-machine was removed from Oh My Zsh (warns on every shell start).
+plugins=(zsh-navigation-tools git git-extras gitignore sublime-merge docker docker-compose tig tmux fzf pyenv pylint python pip command-not-found)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -92,12 +101,11 @@ source $ZSH/oh-my-zsh.sh
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
 
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
+# Preferred editor: neovim (LazyVim), replaces vim everywhere
+export EDITOR='nvim'
+export VISUAL='nvim'
+alias vim='nvim'
+alias vi='nvim'
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -114,4 +122,5 @@ source $ZSH/oh-my-zsh.sh
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-source ~/.custom.zshrc
+# Machine-specific bits (secrets, local PATH); created by setup.sh, not in the repo
+[[ -f ~/.custom.zshrc ]] && source ~/.custom.zshrc
