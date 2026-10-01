@@ -46,14 +46,14 @@ else
 fi
 
 # Tools installed outside the package manager (Linux tarballs / user-local installers)
-info "upgrade neovim";  update_neovim
-info "upgrade lazygit"; update_lazygit
-info "upgrade node";    update_fnm_node
-info "upgrade tree-sitter-cli"; update_tree_sitter_cli
-info "upgrade claude";  update_claude_code
-info "upgrade herdr";   update_herdr
-info "upgrade fresh";   update_fresh
-info "upgrade revdiff"; update_revdiff
+step "upgrade neovim"          update_neovim
+step "upgrade lazygit"         update_lazygit
+step "upgrade node"            update_fnm_node
+step "upgrade tree-sitter-cli" update_tree_sitter_cli
+step "upgrade claude"          update_claude_code
+step "upgrade herdr"           update_herdr
+step "upgrade fresh"           update_fresh
+step "upgrade revdiff"         update_revdiff
 
 
 info "update Oh My Zsh"
@@ -70,4 +70,5 @@ if [ -n "$(git status --porcelain nvim/lazy-lock.json)" ]; then
 fi
 
 
+report_failed_steps
 info "FINISH: restart your terminal or run: exec zsh"

@@ -159,7 +159,30 @@ set_default_shell_zsh() {
   fi
   ensure_chsh
   info "set zsh as default shell (may ask for your password)"
-  chsh -s "$zsh_path"
+  # chsh needs the user's password; non-interactive runs (no tty) fail with
+  # "PAM: Authentication failure", so fall back to sudo when it is available.
+  chsh -s "$zsh_path" || $SUDO chsh -s "$zsh_path" "$USER" || warn "could not change the login shell to zsh"
+}
+
+# Track steps that failed so setup.sh can print a summary instead of exiting 0 silently.
+FAILED_STEPS=()
+step() {
+  # usage: step "<label>" <command...>
+  local label="$1"; shift
+  info "$label"
+  if ! "$@"; then
+    FAILED_STEPS+=("$label")
+    warn "step failed: $label"
+  fi
+}
+report_failed_steps() {
+  if [ ${#FAILED_STEPS[@]} -eq 0 ]; then
+    info "all steps succeeded"
+    return 0
+  fi
+  warn "FAILED STEPS (${#FAILED_STEPS[@]}):"
+  for s in "${FAILED_STEPS[@]}"; do warn "  - $s"; done
+  return 1
 }
 
 
@@ -209,15 +232,13 @@ install_lazygit() {
   fi
   if [ $IS_OSX -eq 1 ]; then
     brew install lazygit
-  elif [ $IS_FEDORA_LINUX -eq 1 ]; then
-    $SUDO dnf install -y lazygit
-  elif [ $IS_APT_LINUX -eq 1 ]; then
-    # In apt since Debian 13 / Ubuntu 26.04; older releases fall back to
-    # GitHub releases. The API call is unauthenticated (60 req/h per IP).
-    if apt_try_install lazygit; then
-      return 0
-    fi
-    info "lazygit not in apt, downloading from GitHub releases"
+  elif [ $IS_APT_LINUX -eq 1 ] && apt_try_install lazygit; then
+    # In apt since Debian 13 / Ubuntu 26.04
+    return 0
+  else
+    # Older apt releases and Fedora (lazygit is only in a COPR there):
+    # GitHub release tarball into /usr/local/bin.
+    info "lazygit not in the distro repos, downloading from GitHub releases"
     install_lazygit_from_github
   fi
 }
@@ -405,7 +426,7 @@ update_neovim() {
 }
 
 update_lazygit() {
-  [ $IS_APT_LINUX -eq 1 ] && [ -x /usr/local/bin/lazygit ] || return 0
+  [ $IS_LINUX -eq 1 ] && [ -x /usr/local/bin/lazygit ] || return 0
   local _have _latest
   # output: "commit=…, build date=…, version=0.65.1, os=…, git version=2.56.0"
   _have="$(lazygit --version | grep -o ', version=[^,]*' | sed 's/.*=//')"

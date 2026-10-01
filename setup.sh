@@ -119,14 +119,14 @@ if [ $IS_APT_LINUX -eq 1 ] && ! command -v fd &> /dev/null && command -v fdfind 
   ln -sfn "$(command -v fdfind)" "$HOME/.local/bin/fd"
 fi
 
-info "install neovim";     install_neovim
-info "install lazygit";    install_lazygit
-info "install fnm + node"; install_fnm_node
-info "install tree-sitter-cli"; install_tree_sitter_cli
-info "install claude";     install_claude_code
-info "install herdr";      install_herdr
-info "install fresh";      install_fresh
-info "install revdiff";    install_revdiff
+step "install neovim"          install_neovim
+step "install lazygit"         install_lazygit
+step "install fnm + node"      install_fnm_node
+step "install tree-sitter-cli" install_tree_sitter_cli
+step "install claude"          install_claude_code
+step "install herdr"           install_herdr
+step "install fresh"           install_fresh
+step "install revdiff"         install_revdiff
 
 
 # =============================================================================
@@ -159,7 +159,8 @@ fi
 # =============================================================================
 info "install Oh My Zsh"
 if [ ! -d "$HOME/.oh-my-zsh" ]; then
-  sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended --keep-zshrc
+  sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended --keep-zshrc \
+    || FAILED_STEPS+=("install Oh My Zsh")
 else
   info "Oh My Zsh already installed, skipping"
 fi
@@ -167,24 +168,25 @@ fi
 info "install Powerlevel10k theme"
 P10K_DIR="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k"
 if [ ! -d "$P10K_DIR" ]; then
-  git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "$P10K_DIR"
+  git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "$P10K_DIR" || FAILED_STEPS+=("install Powerlevel10k")
 else
   info "Powerlevel10k already installed, skipping"
 fi
 
-set_default_shell_zsh
+step "set default shell" set_default_shell_zsh
 
 
 # =============================================================================
 # Neovim plugins (LazyVim): install the versions pinned in nvim/lazy-lock.json
 # headlessly, so the first launch is instant. update.sh runs `Lazy! sync`.
 # =============================================================================
-info "install neovim plugins (LazyVim restore)"
-nvim --headless "+Lazy! restore" +qa
+step "install neovim plugins (LazyVim restore)" nvim --headless "+Lazy! restore" +qa
 
 
+report_failed_steps
+status=$?
 if [ "$DOTFILES_UPDATE" -eq 1 ]; then
-  exit 0
+  exit $status
 fi
 info "FINISH"
 if [ $IS_OSX -eq 1 ]; then

@@ -12,4 +12,4 @@ DNF_PACKAGES=(git curl zsh tmux tig mc ripgrep fd-find fzf unzip gcc make)
 
 # Also managed by the package manager where it provides them (upgraded by update.sh)
 BREW_TOOLS=(neovim lazygit fnm tree-sitter-cli herdr fresh-editor revdiff)
-DNF_TOOLS=(neovim lazygit)
+DNF_TOOLS=(neovim)
