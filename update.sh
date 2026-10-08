@@ -54,6 +54,8 @@ step "upgrade claude"          update_claude_code
 step "upgrade herdr"           update_herdr
 step "upgrade fresh"           update_fresh
 step "upgrade revdiff"         update_revdiff
+step "upgrade uv"              update_uv
+step "upgrade frogmouth"       update_frogmouth
 
 
 info "update Oh My Zsh"
