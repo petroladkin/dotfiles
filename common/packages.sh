@@ -2,9 +2,9 @@
 # What gets installed. Shared by setup.sh and update.sh.
 #
 # Package-manager names differ, so one list per manager. Tools with their own
-# installers (neovim on apt, lazygit, fnm/node, claude, herdr, fresh, revdiff, uv,
-# frogmouth, tdf) are
-# handled by install_*/update_* functions in common/common.sh.
+# installers (neovim on apt, lazygit, fnm/node, claude, herdr, fresh, revdiff,
+# uv, frogmouth, tdf) are handled by install_*/update_* functions in
+# common/common.sh.
 #
 
 BREW_PACKAGES=(git curl tmux tig midnight-commander ripgrep fd fzf)
