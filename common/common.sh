@@ -398,6 +398,47 @@ install_revdiff_from_github() {
 }
 
 
+# uv: Python tool manager, used here to install Python CLIs (frogmouth) in
+# isolated environments. brew on macOS, Astral's installer into ~/.local/bin
+# on Linux (UV_NO_MODIFY_PATH: zshrc already puts ~/.local/bin on PATH).
+install_uv() {
+  if command -v uv &> /dev/null; then
+    info "uv already installed, skipping"
+    return 0
+  fi
+  if [ $IS_OSX -eq 1 ]; then
+    brew install uv
+  else
+    curl -LsSf https://astral.sh/uv/install.sh | env UV_NO_MODIFY_PATH=1 sh
+  fi
+}
+
+# frogmouth: Markdown browser for the terminal (github.com/Textualize/frogmouth).
+# Not packaged anywhere useful, so it is a uv tool on every OS.
+install_frogmouth() {
+  if command -v frogmouth &> /dev/null; then
+    info "frogmouth already installed, skipping"
+    return 0
+  fi
+  command -v uv &> /dev/null || { warn "uv not found, skipping frogmouth"; return 1; }
+  uv tool install frogmouth
+}
+
+# tdf: PDF viewer for the terminal (github.com/itsjunetime/tdf), draws real
+# pages through the kitty graphics protocol. Homebrew only: the project ships
+# no Linux binaries, and the `tdf` crate on crates.io is an unrelated project.
+install_tdf() {
+  if command -v tdf &> /dev/null; then
+    info "tdf already installed, skipping"
+    return 0
+  fi
+  if [ $IS_OSX -eq 1 ]; then
+    brew install tdf
+  else
+    info "tdf has no Linux release builds, skipping"
+  fi
+}
+
 # ---------------------------------------------------------------------------
 # Updaters for tools that no package manager tracks (used by update.sh).
 # Each one is a no-op when the tool came from brew/apt/dnf.
@@ -499,4 +540,19 @@ update_fresh() {
   else
     info "fresh is managed by the package manager, skipping"
   fi
+}
+
+
+update_uv() {
+  command -v uv &> /dev/null || return 0
+  if is_user_local uv; then
+    uv self update
+  else
+    info "uv is managed by the package manager, skipping"
+  fi
+}
+
+update_frogmouth() {
+  command -v uv &> /dev/null && command -v frogmouth &> /dev/null || return 0
+  uv tool upgrade frogmouth
 }

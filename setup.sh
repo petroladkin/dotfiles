@@ -127,6 +127,9 @@ step "install claude"          install_claude_code
 step "install herdr"           install_herdr
 step "install fresh"           install_fresh
 step "install revdiff"         install_revdiff
+step "install uv"              install_uv
+step "install frogmouth"       install_frogmouth
+step "install tdf"             install_tdf
 
 
 # =============================================================================

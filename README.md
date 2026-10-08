@@ -26,6 +26,8 @@ Supported: macOS, Ubuntu / Debian / Pop!_OS, Fedora, WSL (Ubuntu).
 - **Shell**: zsh + Oh My Zsh + Powerlevel10k, MesloLGS NF fonts
 - **Editor**: Neovim + [LazyVim](https://www.lazyvim.org/) (config in `nvim/`), `vim` is aliased to `nvim`
 - **Terminal**: tmux, [Fresh](https://getfresh.dev/) terminal IDE, Midnight Commander
+- **Viewers**: [Frogmouth](https://github.com/Textualize/frogmouth) (Markdown), [tdf](https://github.com/itsjunetime/tdf) (PDF, macOS only)
+- **Python tooling**: [uv](https://docs.astral.sh/uv/)
 - **Git**: tig, lazygit, [revdiff](https://github.com/umputun/revdiff) (TUI diff review with annotations)
 - **Agents**: [Claude Code](https://code.claude.com/), [Herdr](https://herdr.dev/)
 - **Runtime**: Node LTS via [fnm](https://github.com/Schniz/fnm) (for LazyVim language servers)
