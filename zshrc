@@ -106,6 +106,7 @@ export EDITOR='nvim'
 export VISUAL='nvim'
 alias vim='nvim'
 alias vi='nvim'
+alias lg='lazygit'
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
